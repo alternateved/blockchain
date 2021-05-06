@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 module.exports = class Blockchain {
   constructor() {
     this.chain = [];
@@ -21,7 +23,7 @@ module.exports = class Blockchain {
   }
 
   getLastBlock() {
-    return this.chain[this.chain.length.length - 1];
+    return this.chain[this.chain.length - 1];
   }
 
   createNewTransaction(amount, sender, recipient) {
@@ -31,6 +33,17 @@ module.exports = class Blockchain {
       recipient,
     };
     this.pendingTransactions.push(newTransaction);
-    return getLastBlock()['index'] + 1;
+    return this.getLastBlock()['index'] + 1;
+  }
+
+  hashBlock(previousBlockHash, currentBlockData, nonce) {
+    const dataAsString =
+      previousBlockHash + nonce + JSON.stringify(currentBlockData);
+    const hash = crypto
+      .createHash('sha256')
+      .update(dataAsString, 'utf8')
+      .digest('hex');
+
+    return hash;
   }
 };
