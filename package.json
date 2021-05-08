@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/alternateved/blockchain/issues"
   },
-  "homepage": "https://github.com/alternateved/blockchain#readme"
+  "homepage": "https://github.com/alternateved/blockchain#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
