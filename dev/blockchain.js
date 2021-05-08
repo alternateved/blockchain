@@ -46,4 +46,16 @@ module.exports = class Blockchain {
 
     return hash;
   }
+
+  proofOfWork(previousBlockHash, currentBlockData) {
+    let nonce = 0;
+    let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    while (hash.slice(0, 4) !== '0000') {
+      console.log(hash);
+      nonce += 1;
+      hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    }
+
+    return nonce;
+  }
 };
