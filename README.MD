@@ -1,4 +1,4 @@
-# Project: Todo list
+# JavaScript blockchain
 
 Blockchain implemented in JavaScript with help of [Learn Blockchain Programming with JavaScript](https://www.packtpub.com/product/learn-blockchain-programming-with-javascript/9781789618822) book.
 
