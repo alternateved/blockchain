@@ -4,6 +4,8 @@ module.exports = class Blockchain {
   constructor() {
     this.chain = [];
     this.pendingTransactions = [];
+    this.networkNodes = [];
+    this.currentNodeUrl = this.currentNodeUrl;
     this.createNewBlock(100, '0', '0');
   }
 

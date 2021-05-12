@@ -2,6 +2,9 @@ const Blockchain = require('./blockchain');
 const { v1: uuid } = require('uuid');
 const express = require('express');
 
+const port = process.argv[2];
+const currentNodeUrl = process.argv[3];
+
 const app = express();
 const bitcoin = new Blockchain();
 
@@ -40,6 +43,6 @@ app.get('/mine', function (req, res) {
   res.json({ note: 'New block mined succesfully', block: newBlock });
 });
 
-app.listen(3000, function () {
-  console.log('listening on port 3000...');
+app.listen(port, function () {
+  console.log(`listening on port ${port}...`);
 });

@@ -4,7 +4,7 @@ Blockchain implemented in JavaScript with help of [Learn Blockchain Programming 
 
 ## **Features**
 
-- `Blockchain()` class with various methods for creating and manipulating blocks and transactions
+- `Blockchain` class with various methods for creating and manipulating blocks and transactions
 - simple implementation of **proof of work**
 - blocks are hashed with SHA256 encryption algorithm
 
