@@ -1,11 +1,11 @@
 const crypto = require('crypto');
 
 module.exports = class Blockchain {
-  constructor() {
+  constructor(currentNodeUrl) {
     this.chain = [];
     this.pendingTransactions = [];
     this.networkNodes = [];
-    this.currentNodeUrl = this.currentNodeUrl;
+    this.currentNodeUrl = currentNodeUrl;
     this.createNewBlock(100, '0', '0');
   }
 
