@@ -43,6 +43,14 @@ app.get('/mine', function (req, res) {
   res.json({ note: 'New block mined succesfully', block: newBlock });
 });
 
+app.post('/register-and-broadcast-node', function (req, res) {
+  const newNodeUrl = req.body.newNodeUrl;
+  bitcoin.networkNodes.push(newNodeUrl);
+});
+
+app.post('/register-nodes-bulk', function (req, res) {});
+
+app.post('/register-node', function (req, res) {});
 app.listen(port, function () {
   console.log(`listening on port ${port}...`);
 });
