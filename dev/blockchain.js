@@ -39,6 +39,11 @@ module.exports = class Blockchain {
     };
   }
 
+  addTransactionToPendingTransactions(transactionObj) {
+    this.pendingTransactions.push(transactionObj);
+    return this.getLastBlock()['index'] + 1;
+  }
+
   hashBlock(previousBlockHash, currentBlockData, nonce) {
     const dataAsString =
       previousBlockHash + nonce + JSON.stringify(currentBlockData);
