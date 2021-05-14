@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { v1: uuid } = require('uuid');
 
 module.exports = class Blockchain {
   constructor(currentNodeUrl) {
@@ -30,13 +31,12 @@ module.exports = class Blockchain {
   }
 
   createNewTransaction(amount, sender, recipient) {
-    const newTransaction = {
+    return {
       amount,
       sender,
       recipient,
+      transactionId: uuid().replace(/[-]/g, ''),
     };
-    this.pendingTransactions.push(newTransaction);
-    return this.getLastBlock()['index'] + 1;
   }
 
   hashBlock(previousBlockHash, currentBlockData, nonce) {
