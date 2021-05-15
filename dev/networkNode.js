@@ -80,7 +80,7 @@ app.get('/mine', function (req, res) {
   });
 
   Promise.all(requestPromises)
-    .then(() => {
+    .then((data) => {
       const url = bitcoin.currentNodeUrl + '/transaction/broadcast';
       const requestOptions = {
         method: 'POST',
@@ -95,14 +95,12 @@ app.get('/mine', function (req, res) {
       };
       return fetch(url, requestOptions);
     })
-    .then(() => {
+    .then((data) => {
       res.json({
-        note: 'New block mined & broadcast successfully',
+        note: 'New block mined & broadcasted successfully',
         block: newBlock,
       });
     });
-
-  res.json({ note: 'New block mined successfully', block: newBlock });
 });
 
 app.post('/receive-new-block', function (req, res) {
