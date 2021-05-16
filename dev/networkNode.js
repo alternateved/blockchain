@@ -228,6 +228,10 @@ app.get('/consensus', function (req, res) {
   });
 });
 
+app.get('/block/:blockHash', function (req, res) {});
+app.get('/transaction/:transactionId', function (req, res) {});
+app.get('/address/:address', function (req, res) {});
+
 app.listen(port, function () {
   console.log(`listening on port ${port}...`);
 });

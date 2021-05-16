@@ -100,4 +100,10 @@ module.exports = class Blockchain {
 
     return validChain;
   }
+
+  getBlock(blockHash) {
+    this.chain.forEach((block) => {
+      if (block.hash === blockHash) return block;
+    });
+  }
 };
