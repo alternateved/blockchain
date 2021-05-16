@@ -120,49 +120,6 @@ app.post('/receive-new-block', function (req, res) {
   }
 });
 
-app.get('/consensus', function (req, res) {
-  const requestPromises = [];
-  bitcoin.networkNodes.forEach((networkNodeUrl) => {
-    const url = networkNodeUrl + '/blockchain';
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    requestPromises.push(fetch(url, requestOptions));
-  });
-
-  Promise.all(requestPromises).then((blockchains) => {
-    const currentChainLength = bitcoin.chain.length;
-    let maxChainLength = currentChainLength;
-    let newLongestChain = null;
-    let newPendingTransactions = null;
-    blockchains.forEach((blockchain) => {
-      if (blockchain.chain.length > maxChainLength) {
-        maxChainLength = blockchain.chain.length;
-        newLongestChain = blockchain.chain;
-        newPendingTransactions = blockchain.pendingTransactions;
-      }
-    });
-
-    if (
-      !newLongestChain ||
-      (newLongestChain && !bitcoin.chainIsValid(newLongestChain))
-    ) {
-      res.json({
-        note: 'Current chain has not been replaced',
-        chain: bitcoin.chain,
-      });
-    } else {
-      bitcoin.chain = newLongestChain;
-      bitcoin.pendingTransactions = newPendingTransactions;
-      res.json({ note: 'This chain has been replaced', chain: bitcoin.chain });
-    }
-  });
-});
-
 app.post('/register-and-broadcast-node', function (req, res) {
   // register new node with the current node
   const newNodeUrl = req.body.newNodeUrl;
@@ -224,6 +181,51 @@ app.post('/register-node', function (req, res) {
   if (nodeNotAlreadyPresent && notCurrentNode)
     bitcoin.networkNodes.push(newNodeUrl);
   res.json({ note: 'New node registered successfully.' });
+});
+
+app.get('/consensus', function (req, res) {
+  const requestPromises = [];
+  bitcoin.networkNodes.forEach((networkNodeUrl) => {
+    const url = networkNodeUrl + '/blockchain';
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    requestPromises.push(
+      fetch(url, requestOptions).then((response) => response.json()),
+    );
+  });
+
+  Promise.all(requestPromises).then((blockchains) => {
+    const currentChainLength = bitcoin.chain.length;
+    let maxChainLength = currentChainLength;
+    let newLongestChain = null;
+    let newPendingTransactions = null;
+    blockchains.forEach((blockchain) => {
+      if (blockchain.chain.length > maxChainLength) {
+        maxChainLength = blockchain.chain.length;
+        newLongestChain = blockchain.chain;
+        newPendingTransactions = blockchain.pendingTransactions;
+      }
+    });
+
+    if (
+      !newLongestChain ||
+      (newLongestChain && !bitcoin.chainIsValid(newLongestChain))
+    ) {
+      res.json({
+        note: 'Current chain has not been replaced',
+        chain: bitcoin.chain,
+      });
+    } else {
+      bitcoin.chain = newLongestChain;
+      bitcoin.pendingTransactions = newPendingTransactions;
+      res.json({ note: 'This chain has been replaced', chain: bitcoin.chain });
+    }
+  });
 });
 
 app.listen(port, function () {
