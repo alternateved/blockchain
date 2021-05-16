@@ -102,8 +102,11 @@ module.exports = class Blockchain {
   }
 
   getBlock(blockHash) {
+    let correctBlock = null;
     this.chain.forEach((block) => {
-      if (block.hash === blockHash) return block;
+      if (block.hash === blockHash) correctBlock = block;
     });
+
+    return correctBlock;
   }
 };

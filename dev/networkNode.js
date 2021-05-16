@@ -2,6 +2,7 @@ const Blockchain = require('./blockchain');
 const { v1: uuid } = require('uuid');
 const express = require('express');
 const fetch = require('node-fetch');
+const { json } = require('express');
 
 const port = process.argv[2];
 const currentNodeUrl = process.argv[3];
@@ -228,7 +229,12 @@ app.get('/consensus', function (req, res) {
   });
 });
 
-app.get('/block/:blockHash', function (req, res) {});
+app.get('/block/:blockHash', function (req, res) {
+  const blockHash = req.params.blockHash;
+  const correctBlock = bitcoin.getBlock(blockHash);
+  res.json({ block: correctBlock });
+});
+
 app.get('/transaction/:transactionId', function (req, res) {});
 app.get('/address/:address', function (req, res) {});
 
