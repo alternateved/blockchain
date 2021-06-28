@@ -20,7 +20,7 @@ Simple blockchain implemented in JavaScript with help of [Learn Blockchain Progr
 - learned how to create decentralized network of nodes
 - learned how consensus algorithm works
 
-### **Tools:**
+### **Tools**
 
 - Visual Studio Code
 - Linux terminal
